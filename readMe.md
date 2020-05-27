@@ -1,0 +1,1 @@
+This app has a dog quiz to show you 'what dog you are.' It also has a random dog image generator.

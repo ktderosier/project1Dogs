@@ -3,7 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Beer</title>
+    <title>Dogs</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
         <!-- CSS only -->
@@ -14,16 +14,46 @@
 </head>
 <body>
 
-    <div class="jumbotron">
-        <h1 class="display-4">Hello, world!</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+
+    <div class="jumbotron" id="jumboarea" >
+        <div class="row">
+            <div class="col">
+                <h1 class="display-4">Search for dogs</h1>
+                      
+                        <div class="input-group mb-3">
+                            <select class="custom-select" id="inputGroupSelect02">
+                              <option selected>Choose...</option>
+                            </select>
+                            <div class="input-group-append">
+                              <label class="input-group-text" for="inputGroupSelect02" id="selectDogButton">dogs</label>
+                            </div>
+                        </div>
+                  </div>
+            <div class="col">
+                <h1 class="display-4">Random dogs</h1>
+                <div class=row id="randomDogArea">
+
+        <a class="btn btn-primary btn-lg" href="#" role="button" id="jumbobutton">show dogs</a>
+            </div>
+
+    
+            </div>
+        </div>
+
       </div>
 
+      <div class=row id="dogArea">
+    </div>
 
 
+      <div class="container">
+          <div id="quiz">
+              <button id="submit"> submit </button>
+                  <div id="results">
+                  </div>
+              
+          </div>
+      </div>
 
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"  crossorigin="anonymous" ></script>
