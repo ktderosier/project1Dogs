@@ -24,10 +24,17 @@ async function selectBreed() {
     $("#selectDogButton").on('click', async() => {
      const input = $("#inputGroupSelect02").val();
      const dogImage = await getDogs(input);
+     console.log(dogImage);
         $("#dogArea").children().remove();
         dogImage.forEach((dog) => {
             $("#dogArea").children().remove();
+            $("#doglist").children().remove();
             $("#dogArea").append(`<img src="${dog.url}">`);
+            $("#doglist").append(`<li>${dog.breeds[0].name}</li>
+            <li>${dog.breeds[0].life_span}</li>
+            <li>${dog.breeds[0].temperament}</li>
+            <li>${dog.breeds[0].weight.metric}</li>
+            `)
         })
     })
   return dropDownResults;
@@ -38,14 +45,18 @@ async function selectBreed() {
 $(() => {
     selectBreed();
 
-    
-
   $("#jumbobutton").on("click", async () => {
     const dogImage = await getDogs();
     $("#dogArea").children().remove();
+    $("#doglist").children().remove();
+
     dogImage.forEach((dog) => {
-      $("#dogArea").children().remove();
       $("#dogArea").append(`<img src="${dog.url}">`);
+      $("#doglist").append(`<li>${dog.breeds[0].name}</li>
+      <li>${dog.breeds[0].life_span}</li>
+      <li>${dog.breeds[0].temperament}</li>
+      <li>${dog.breeds[0].weight.metric}</li>
+      `)
     });
   });
 
