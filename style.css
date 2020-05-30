@@ -2,4 +2,25 @@ img{
     max-width: 40%;
     max-height: 40%;
     display: block;
+    margin: auto;
+}
+
+body{
+    background-image: url("https://data.whicdn.com/images/264952026/original.jpg");
+}
+
+div{
+    background-color: #e9ecef;
+    text-align: center;
+    display: block;
+}
+
+
+.container .card{
+    margin: auto;
+}
+
+#doglist{
+    display:block;
+    width: 100%;
 }

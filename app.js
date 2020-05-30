@@ -29,168 +29,209 @@ async function selectBreed() {
 
 function appendDogInfo(dogImage) {
   console.log("dog image", dogImage);
-  $("#dogArea").children().remove();
+  $("#dogArea img").remove();
   $("#doglist").children().remove();
 
-  $("#dogArea").append(`<img src="${dogImage[0].url}">`);
+  $("#dogArea").prepend(`<img src="${dogImage[0].url}"> `);
+
   if (dogImage[0].breeds[0]) {
-    $("#doglist").append(`<li class="list-group-item">Breed: ${dogImage[0].breeds[0].name}</li>
+    $("#doglist")
+      .append(`<li class="list-group-item">Breed: ${dogImage[0].breeds[0].name}</li>
     <li class="list-group-item">Life span: ${dogImage[0].breeds[0].life_span}</li>
     <li class="list-group-item">Temperament: ${dogImage[0].breeds[0].temperament}</li>
     <li class="list-group-item">Weight: ${dogImage[0].breeds[0].weight.metric} kg</li>
     `);
   } else {
-    $("#doglist").append(`<li class="list-group-item">This dog doesn't have any stats ☹</li>`);
+    $("#doglist").append(
+      `<li class="list-group-item">This dog doesn't have any stats ☹</li>`
+    );
   }
 }
 
-
 $(() => {
+  $("#quiz").hide();
+  $("#startQuiz").on("click", () => {
+    $("#quiz").show();
+    $("#startQuiz").hide();
+    buildQuiz(myQuestions);
+  });
+
   selectBreed();
 
-/////////////random breed
+  /////////////random breed
   $("#jumbobutton").on("click", async () => {
     const dogImage = await getDogs();
     appendDogInfo(dogImage);
   });
 
-/////////////select a breed
+  /////////////select a breed
   $("#selectDogButton").on("click", async () => {
     const input = $("#inputGroupSelect02").val();
     const dogImage = await getDogs(input);
     console.log("dog image", dogImage);
 
     appendDogInfo(dogImage);
-});
-///////QUIZ
+  });
+  ///////QUIZ
   const myQuestions = [
     {
       question: "What is your favorite Sunday activity?",
       answers: {
         a: "Sleep in and watch Netflix all day",
         b: "Wake up at 6am, go for a 15km run, and organize everything",
-        c: "Read a book and contemplate the meaning of life/ investigate unsolved crimes"
-    }},
+        c:
+          "Read a book and contemplate the meaning of life/ investigate unsolved crimes",
+      },
+    },
     {
       question: "What is your favorite food?",
       answers: {
         a: "Chocolate, candy, chips, anything sweet or salty",
         b: "Grilled chicken and broccoli",
-        c: "Caviar"
-    }},
+        c: "Caviar",
+      },
+    },
     {
       question: "What's your hobby?",
       answers: {
         a: "Is Netflix a hobby?",
         b: "Exercising",
-        c: "Studying philosophy/ other deep subjects"
-    }},
+        c: "Studying philosophy/ other deep subjects",
+      },
+    },
     {
       question: "If you could have any career in the world, what would it be?",
       answers: {
         a: "Food taster",
         b: "Own a global gym franchise",
-        c: "Detective"
-    }},
-      {
+        c: "Detective",
+      },
+    },
+    {
       question: "How would your friends describe you?",
       answers: {
         a: "Chilled out, peaceful, and easygoing",
         b: "Active, organized, and happy",
-        c: "Curious, imaginative, and loyal"
-      }},
-      {
+        c: "Curious, imaginative, and loyal",
+      },
+    },
+    {
       question: "Where do you want travel most?",
       answers: {
         a: "Austria, for the spas",
-        b: "France, so I can finally take part in Tour de France and eat croissants",
-        c: "Berlin, to wander around the city and look at art"
-      }},
-      {
+        b:
+          "France, so I can finally take part in Tour de France and eat croissants",
+        c: "Berlin, to wander around the city and look at art",
+      },
+    },
+    {
       question: "What's most important to you?",
       answers: {
         a: "World and self peace",
         b: "Pushing myself to my max potential",
-        c: "Continuous learning"
-      }},
-      {
+        c: "Continuous learning",
+      },
+    },
+    {
       question: "What's your favorite drink?",
       answers: {
         a: "Beer",
         b: "Vodka, soda, lime",
-        c: "Espresso Martini"
-      }
-    }
-  ]
+        c: "Espresso Martini",
+      },
+    },
+  ];
 
   const quizContainer = $("#quiz");
-  const resultsContainer =$("#results");
-  const submitButton = $("#submitQuiz");
+  const resultsContainer = $("#results");
+  const submitButton = $("#startQuiz");
   let answers = {
     a: 0,
     b: 0,
-    c: 0
+    c: 0,
   };
 
-  function buildQuiz(questionObject){
-    // $("#submitQuiz").on('click', () =>{
-    let idx   = 0;
-$("#next").on('click', () => {
-  console.log("next hit")
-  $("#questions").children().remove();
+  function buildQuiz(questionObject) {
+    let idx = 0;
+    $("#questions").children().remove();
     $("#questions").append(`<h1>${questionObject[idx].question}</h1>
+    <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
+    <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
+    <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
+
+    $(".quizButtons").on("click", (e) => {
+      let selectedAnswer = e.target.id;
+      answers[selectedAnswer] += 1;
+      console.log(answers);
+    });
+
+    $("#next").on("click", () => {
+      console.log("next hit");
+      $("#questions").children().remove();
+      if (idx <= 3) {
+        $("#questions").append(`<h1>${questionObject[idx].question}</h1>
         <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
         <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
         <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
-    idx = idx > 7 ? 0 : idx+1;
+      }
 
-       $(".quizButtons").on('click', (e) =>{
-    let selectedAnswer = e.target.id;
-      answers[selectedAnswer] += 1;
-      console.log(answers);
-      
-      })
-});
+      console.log("idx", idx);
+      if (idx == 3) {
+        console.log("idx in if", idx);
+        //display results
+        showResults(answers);
+        idx = 0;
+        return;
+      }
 
-    // questionObject.map(function (quizQuestion, index){
-        
-    //     $("#questions").append(`<h1 id=${index}>${quizQuestion.question}</h1>`)
-    //     $("#questions").append(`
-    //     <p><input type="radio" id="a" class="quizButtons" name="answer"> ${quizQuestion.answers.a}</p>
-    //     <p><input type="radio" id="b" class="quizButtons" name="answer"> ${quizQuestion.answers.b}</p>
-    //     <p><input type="radio" id="c" class="quizButtons" name="answer"> ${quizQuestion.answers.c}</p>`) 
-    //     quizProgress()
-    //     console.log("quiz question", quizQuestion)
-    // })
-  
-    //when answer is clicked, increase A B or C score by 1 and push to answers array
-    //   $(".quizButtons").on('click', (e) =>{
-    // let selectedAnswer = e.target.id;
-    //   answers[selectedAnswer] += 1;
-    //   console.log(answers);
-      
-    //   })
-    // })
-      
+      $(".quizButtons").on("click", (e) => {
+        let selectedAnswer = e.target.id;
+        answers[selectedAnswer] += 1;
+        console.log(answers);
+      });
+      idx++;
+    });
+  }
+
+  //quiz progress function
+  function quizProgress() {}
+
+  //calculate the results
+  function showResults(results) {
+    let quizResult = "";
+    $("#questions").children().remove();
+
+    if (results.a > results.b && results.a > results.c) {
+      quizResult = "lazy dog";
+    } else {
+      if (results.b > results.a && results.b > results.c) {
+        quizResult = "active dog";
+      } else {
+        if (results.c > results.a && results.c > results.b) {
+          quizResult = "smart dog";
+        } else {
+          if (results.a === results.b) {
+            quizResult = "lazy/ active dog";
+          } else {
+            if (results.a === results.c) {
+              cquizResult = "lazy/smart dog";
+            } else {
+              if (results.b === results.c) {
+                quizResult = "active/smart dog";
+              }
+            }
+          }
+        }
+      }
     }
-
-//quiz progress function
-function quizProgress(){
-}
-
-//show results
-
-function showResults(){
-
-}
+    $("#questions").append(quizResult);
+    $("#next").remove();
+    $("#startQuiz").show();
+  }
   //display quiz
 
-  buildQuiz(myQuestions);
+  // buildQuiz(myQuestions);
 
-  //for submit
-  $("#submitQuiz").on('click', showResults);
-
-
-
-
+  // //for submit
+  // $("#startQuiz").on("click", buildQuiz);
 });
