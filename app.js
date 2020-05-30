@@ -34,13 +34,13 @@ function appendDogInfo(dogImage) {
 
   $("#dogArea").append(`<img src="${dogImage[0].url}">`);
   if (dogImage[0].breeds[0]) {
-    $("#doglist").append(`<li>Breed: ${dogImage[0].breeds[0].name}</li>
-    <li>Life span: ${dogImage[0].breeds[0].life_span}</li>
-    <li>Temperament: ${dogImage[0].breeds[0].temperament}</li>
-    <li>Weight: ${dogImage[0].breeds[0].weight.metric} kg</li>
+    $("#doglist").append(`<li class="list-group-item">Breed: ${dogImage[0].breeds[0].name}</li>
+    <li class="list-group-item">Life span: ${dogImage[0].breeds[0].life_span}</li>
+    <li class="list-group-item">Temperament: ${dogImage[0].breeds[0].temperament}</li>
+    <li class="list-group-item">Weight: ${dogImage[0].breeds[0].weight.metric} kg</li>
     `);
   } else {
-    $("#doglist").append("<h2>No info</h2>");
+    $("#doglist").append(`<li class="list-group-item">This dog doesn't have any stats ☹</li>`);
   }
 }
 
@@ -127,34 +127,55 @@ $(() => {
   const resultsContainer =$("#results");
   const submitButton = $("#submitQuiz");
   let answers = {
-    A: 0,
-    B: 0,
-    C: 0
+    a: 0,
+    b: 0,
+    c: 0
   };
 
   function buildQuiz(questionObject){
-    questionObject.map(function (quizQuestion, index){
-        // $("#quiz").children().remove();
-        $("#quiz").append(`<h1 id=${index}>${quizQuestion.question}</h1>`)
-        $("#quiz").append(`<h2><button id="A" class="quizButtons">${quizQuestion.answers.a}</h2></button>
-        <h2><button id="B" class="quizButtons">${quizQuestion.answers.b}</h2></button>
-        <h2><button id="C" class="quizButtons">${quizQuestion.answers.c}</h2></button>`) 
-        quizProgress()
-        console.log("quiz question", quizQuestion)
-    })
-      $(".quizButtons").on('click', (e) =>{
+    // $("#submitQuiz").on('click', () =>{
+    let idx   = 0;
+$("#next").on('click', () => {
+  console.log("next hit")
+  $("#questions").children().remove();
+    $("#questions").append(`<h1>${questionObject[idx].question}</h1>
+        <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
+        <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
+        <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
+    idx = idx > 7 ? 0 : idx+1;
 
-    let selectedAnswer = answers[e.target.id];
+       $(".quizButtons").on('click', (e) =>{
+    let selectedAnswer = e.target.id;
       answers[selectedAnswer] += 1;
-
       console.log(answers);
       
       })
+});
+
+    // questionObject.map(function (quizQuestion, index){
+        
+    //     $("#questions").append(`<h1 id=${index}>${quizQuestion.question}</h1>`)
+    //     $("#questions").append(`
+    //     <p><input type="radio" id="a" class="quizButtons" name="answer"> ${quizQuestion.answers.a}</p>
+    //     <p><input type="radio" id="b" class="quizButtons" name="answer"> ${quizQuestion.answers.b}</p>
+    //     <p><input type="radio" id="c" class="quizButtons" name="answer"> ${quizQuestion.answers.c}</p>`) 
+    //     quizProgress()
+    //     console.log("quiz question", quizQuestion)
+    // })
+  
+    //when answer is clicked, increase A B or C score by 1 and push to answers array
+    //   $(".quizButtons").on('click', (e) =>{
+    // let selectedAnswer = e.target.id;
+    //   answers[selectedAnswer] += 1;
+    //   console.log(answers);
+      
+    //   })
+    // })
+      
     }
 
 //quiz progress function
 function quizProgress(){
-
 }
 
 //show results
