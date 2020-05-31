@@ -29,3 +29,17 @@ div{
 .card{
     border: none;
 }
+
+.flex-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.flex-container img{
+    max-width: 20%;
+    max-height: 20%;
+    display: block;
+    margin: auto;
+}
