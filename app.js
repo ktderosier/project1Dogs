@@ -5,8 +5,7 @@ const myQuestions = [
     answers: {
       a: "Sleep in and watch Netflix all day",
       b: "Wake up at 6am, go for a 15km run, and organize everything",
-      c:
-        "Read a book and contemplate the meaning of life/ investigate unsolved crimes",
+      c:"Read a book and contemplate the meaning of life/ investigate unsolved crimes",
     },
   },
   {
@@ -45,8 +44,7 @@ const myQuestions = [
     question: "Where do you want travel most?",
     answers: {
       a: "Austria, for the spas",
-      b:
-        "France, so I can finally take part in Tour de France and eat croissants",
+      b:"France, so I can finally take part in Tour de France and eat croissants",
       c: "Berlin, to wander around the city and look at art",
     },
   },
@@ -154,6 +152,8 @@ function buildQuiz(questionObject) {
       console.log("idx in if", idx);
       //display results
       showResults(answers);
+      $("#questions").append(`<div><button class="btn btn-danger" id="startAgain">Start over!</button></div>`);
+      rebuildQuiz();
       idx = 0;
       return;
     }
@@ -166,39 +166,46 @@ function buildQuiz(questionObject) {
   });
 }
 
+function rebuildQuiz (){
+  $("#startAgain").on('click', () =>{
+    location.reload();
+  })
+}
+
 //calculate the results
 function showResults(results) {
   let quizResult = "";
   $("#questions").children().remove();
+  $("#startQuiz").remove();
   if (results.a > results.b && results.a > results.c) {
-    quizResult = "lazy dog";
+    quizResult = $(`<h3>"You're a Pug! You're lazy, but at least you're cute."</h3>`);
     $("#questions").append(
-      `<img src="https://cdn2.thedogapi.com/images/HyJvcl9N7_1280.jpg">`
+      `<img src="https://media.giphy.com/media/cfUMNY4RfGhEc/source.gif">`
     );
   } else if (results.b > results.a && results.b > results.c) {
-    quizResult = "active dog";
+    quizResult = "You're a Greyhound! You're high energy and love all types of activites that get you moving.";
     $("#questions").append(
-      `<img src="https://cdn2.thedogapi.com/images/ryNYMx94X_1280.jpg">`
+      `<img src="https://media.giphy.com/media/kBWJCqn4SvswE/giphy.gif">`
     );
   } else if (results.c > results.a && results.c > results.b) {
-    quizResult = "smart dog";
+    quizResult = "You're a Lab! The most well-rounded dog. You're smart, active, and just chill enough.";
     $("#questions").append(
-      `<img src="https://cdn2.thedogapi.com/images/B1uW7l5VX_1280.jpg">`
+      `<img src="https://media.giphy.com/media/JN24NRiGnB8bK/giphy.gif">`
     );
   } else if (results.a === results.b) {
-    quizResult = "lazy/ active dog";
+    quizResult = "You're a French Bulldog! You're easygoing, a bit lazy, but still love to run around and get some exercise in.";
     $("#questions").append(
-      `<img src="https://cdn2.thedogapi.com/images/HyWNfxc47_1280.jpg">`
+      `<img src="https://media.giphy.com/media/mYb4JOmRfa5oKRh6k4/source.gif">`
     );
   } else if (results.a === results.c) {
-    quizResult = "lazy/smart dog";
+    quizResult = "You're a Boston Terrier! You're smart, but a little lazy. Your mantra is 'work smarter, not harder.'";
     $("#questions").append(
-      `<img src="https://cdn2.thedogapi.com/images/rkZRggqVX_1280.jpg">`
+      `<img src="https://media.giphy.com/media/5Yt4xKb0e13UXWg0zh/source.gif">`
     );
   } else if (results.b === results.c) {
-    quizResult = "active/smart dog";
+    quizResult = "You're a Border Collie! You're a hard worker, super smart, and very active.";
     $("#questions").append(
-      `<img src="https://cdn2.thedogapi.com/images/By9zNgqE7_1280.jpg">`
+      `<img src="https://media.giphy.com/media/VaGCgNQlJnzDa/giphy.gif">`
     );
   }
 
