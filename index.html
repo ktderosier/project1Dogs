@@ -34,40 +34,44 @@
             </select>
             <div class="input-group-append">
               <label
-                class="input-group-text"
+                class="btn btn-secondary"
                 for="inputGroupSelect02"
                 id="selectDogButton"
-                >dogs</label
+                >SEARCH FOR DOG</label
               >
             </div>
           </div>
         </div>
         <div class="col">
-          <a class="btn btn-dark" role="button" id="jumbobutton">show dogs</a>
+          <button type="button" class="btn btn-secondary" id="jumbobutton">RANDOM DOG!!</a>
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="flex-container">
       <div class="card" style="width: 40rem;">
         <div class="card-body">
-          <div class="row" id="dogArea">
+          <div class="flex-row" id="dogArea">
             <ul id="doglist" class="list-group list-group-flush"></ul>
           </div>
         </div>
       </div>
     </div>
 
+
+
     <!-- QUIZ -->
 
     <div class="flex-container">
       <div id="quiz">
-        <button id="next" class="btn btn-dark">NEXT</button>
         <div id="questions">
           <div id="results"></div>
+          <button id="next" class="btn btn-dark">NEXT</button>
         </div>
       </div>
-      <div class="row"><button id="startQuiz">Start quiz</button></div>
+      <div id="startQuiz"><h1>Wondering what dog you are? Take the quiz below!</h1><img src="https://media.giphy.com/media/DOmoqqHVkhLos/source.gif"><button type="button" class="btn btn-success btn-lg btn-block">Start quiz</button></div>
+
+      <!-- <div class="row"></div> -->
     </div>
 
     <!-- JS, Popper.js, and jQuery -->

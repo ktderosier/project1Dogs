@@ -18,9 +18,14 @@ div{
 
 .container .card{
     margin: auto;
+   
 }
 
 #doglist{
     display:block;
     width: 100%;
+}
+
+.card{
+    border: none;
 }

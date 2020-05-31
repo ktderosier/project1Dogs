@@ -51,6 +51,8 @@ function appendDogInfo(dogImage) {
 $(() => {
   $("#quiz").hide();
   $("#startQuiz").on("click", () => {
+    $("#doglist").hide();
+    $("#dogArea").hide();
     $("#quiz").show();
     $("#startQuiz").hide();
     buildQuiz(myQuestions);
@@ -72,7 +74,94 @@ $(() => {
 
     appendDogInfo(dogImage);
   });
-  ///////QUIZ
+
+
+  function buildQuiz(questionObject) {
+    let idx = 0;
+    $("#questions").children().remove();
+    $("#questions").append(`<h1>${questionObject[idx].question}</h1>
+    <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
+    <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
+    <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
+
+    $(".quizButtons").on("click", (e) => {
+      let selectedAnswer = e.target.id;
+      answers[selectedAnswer] += 1;
+      console.log(answers);
+    });
+
+    $("#next").on("click", () => {
+      console.log("next hit");
+      $("#questions").children().remove();
+      if (idx <= 3) {
+        $("#questions").append(`<h1>${questionObject[idx].question}</h1>
+        <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
+        <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
+        <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
+      }
+
+      console.log("idx", idx);
+      if (idx == 3) {
+        console.log("idx in if", idx);
+        //display results
+        showResults(answers);
+        idx = 0;
+        return;
+      }
+
+      $(".quizButtons").on("click", (e) => {
+        let selectedAnswer = e.target.id;
+        answers[selectedAnswer] += 1;
+        console.log(answers);
+      });
+      idx++;
+    });
+  }
+
+
+  //calculate the results
+  function showResults(results) {
+    let quizResult = "";
+    $("#questions").children().remove();
+
+    if (results.a > results.b && results.a > results.c) {
+      quizResult = "lazy dog";
+      $("#questions").append(`<img src="https://cdn2.thedogapi.com/images/HyJvcl9N7_1280.jpg">`)
+    } else {
+      if (results.b > results.a && results.b > results.c) {
+        quizResult = "active dog";
+        $("#questions").append(`<img src="https://cdn2.thedogapi.com/images/ryNYMx94X_1280.jpg">`)
+      } else {
+        if (results.c > results.a && results.c > results.b) {
+          quizResult = "smart dog";
+          $("#questions").append(`<img src="https://cdn2.thedogapi.com/images/B1uW7l5VX_1280.jpg">`)
+        } else {
+          if (results.a === results.b) {
+            quizResult = "lazy/ active dog";
+            $("#questions").append(`<img src="https://cdn2.thedogapi.com/images/HyWNfxc47_1280.jpg">`)
+          } else {
+            if (results.a === results.c) {
+              quizResult = "lazy/smart dog";
+              $("#questions").append(`<img src="https://cdn2.thedogapi.com/images/rkZRggqVX_1280.jpg">`)
+            } else {
+              if (results.b === results.c) {
+                quizResult = "active/smart dog";
+                $("#questions").append(`<img src="https://cdn2.thedogapi.com/images/By9zNgqE7_1280.jpg">`)
+              }
+            }
+          }
+        }
+      }
+    }
+    $("#questions").append(quizResult);
+    $("#next").remove();
+    $("#startQuiz").show();
+  }
+
+});
+
+
+  ///////QUIZ///////////
   const myQuestions = [
     {
       question: "What is your favorite Sunday activity?",
@@ -142,96 +231,8 @@ $(() => {
     },
   ];
 
-  const quizContainer = $("#quiz");
-  const resultsContainer = $("#results");
-  const submitButton = $("#startQuiz");
   let answers = {
     a: 0,
     b: 0,
     c: 0,
   };
-
-  function buildQuiz(questionObject) {
-    let idx = 0;
-    $("#questions").children().remove();
-    $("#questions").append(`<h1>${questionObject[idx].question}</h1>
-    <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
-    <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
-    <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
-
-    $(".quizButtons").on("click", (e) => {
-      let selectedAnswer = e.target.id;
-      answers[selectedAnswer] += 1;
-      console.log(answers);
-    });
-
-    $("#next").on("click", () => {
-      console.log("next hit");
-      $("#questions").children().remove();
-      if (idx <= 3) {
-        $("#questions").append(`<h1>${questionObject[idx].question}</h1>
-        <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
-        <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
-        <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
-      }
-
-      console.log("idx", idx);
-      if (idx == 3) {
-        console.log("idx in if", idx);
-        //display results
-        showResults(answers);
-        idx = 0;
-        return;
-      }
-
-      $(".quizButtons").on("click", (e) => {
-        let selectedAnswer = e.target.id;
-        answers[selectedAnswer] += 1;
-        console.log(answers);
-      });
-      idx++;
-    });
-  }
-
-  //quiz progress function
-  function quizProgress() {}
-
-  //calculate the results
-  function showResults(results) {
-    let quizResult = "";
-    $("#questions").children().remove();
-
-    if (results.a > results.b && results.a > results.c) {
-      quizResult = "lazy dog";
-    } else {
-      if (results.b > results.a && results.b > results.c) {
-        quizResult = "active dog";
-      } else {
-        if (results.c > results.a && results.c > results.b) {
-          quizResult = "smart dog";
-        } else {
-          if (results.a === results.b) {
-            quizResult = "lazy/ active dog";
-          } else {
-            if (results.a === results.c) {
-              cquizResult = "lazy/smart dog";
-            } else {
-              if (results.b === results.c) {
-                quizResult = "active/smart dog";
-              }
-            }
-          }
-        }
-      }
-    }
-    $("#questions").append(quizResult);
-    $("#next").remove();
-    $("#startQuiz").show();
-  }
-  //display quiz
-
-  // buildQuiz(myQuestions);
-
-  // //for submit
-  // $("#startQuiz").on("click", buildQuiz);
-});
