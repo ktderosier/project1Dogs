@@ -36,10 +36,13 @@ div{
     flex-direction: column;
 }
 
-
-.flex-container img{
-    max-width: 20%;
-    max-height: 20%;
-    display: block;
+.card{
     margin: auto;
 }
+
+/* .flex-container img{
+    max-width: 40%;
+    max-height: 40%;
+    display: block;
+    margin: auto;
+} */

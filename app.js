@@ -127,7 +127,7 @@ function buildQuiz(questionObject) {
   $("#questions").children().remove();
   $("#questions").append(`<h1>${questionObject[idx].question}</h1>
   <div class="flex-container">
-  <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
+  <p><input type="radio"  id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
   <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
   <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p></div>`);
 
@@ -153,7 +153,7 @@ function buildQuiz(questionObject) {
       console.log("idx in if", idx);
       //display results
       showResults(answers);
-      $("#questions").append(`<div><button class="btn btn-danger" id="startAgain">Start over!</button></div>`);
+      $("#questions").append(`<div><button class="btn btn-danger btn-lg btn-block" id="startAgain">Start over!</button></div>`);
       rebuildQuiz();
       idx = 0;
       return;
