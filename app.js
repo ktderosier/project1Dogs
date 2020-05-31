@@ -126,9 +126,10 @@ function buildQuiz(questionObject) {
   let idx = 0;
   $("#questions").children().remove();
   $("#questions").append(`<h1>${questionObject[idx].question}</h1>
+  <div class="flex-container">
   <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
   <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
-  <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
+  <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p></div>`);
 
   $(".quizButtons").on("click", (e) => {
     let selectedAnswer = e.target.id;
@@ -140,15 +141,15 @@ function buildQuiz(questionObject) {
     idx++;
     console.log("next hit");
     $("#questions").children().remove();
-    if (idx <= 3) {
+    if (idx <= 7) {
       $("#questions").append(`<h1>${questionObject[idx].question}</h1>
-      <p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
+      <div class="flex-container"><p><input type="radio" id="a" class="quizButtons" name="answer"> ${questionObject[idx].answers.a}</p>
       <p><input type="radio" id="b" class="quizButtons" name="answer"> ${questionObject[idx].answers.b}</p>
-      <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p>`);
+      <p><input type="radio" id="c" class="quizButtons" name="answer"> ${questionObject[idx].answers.c}</p></div>`);
     }
 
     console.log("idx", idx);
-    if (idx == 3) {
+    if (idx == 8) {
       console.log("idx in if", idx);
       //display results
       showResults(answers);
@@ -166,13 +167,14 @@ function buildQuiz(questionObject) {
   });
 }
 
+////rebuild the quiz the end////////
 function rebuildQuiz (){
   $("#startAgain").on('click', () =>{
     location.reload();
   })
 }
 
-//calculate the results
+//////////calculate the results////////
 function showResults(results) {
   let quizResult = "";
   $("#questions").children().remove();
